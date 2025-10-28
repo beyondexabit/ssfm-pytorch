@@ -87,7 +87,7 @@ class SSFM():
                 The normalised output signal of the fibre
         """
         for step in range(self.steps):
-            # # Coupling
+            # Coupling
             x = torch.matmul(x, self.c[step])
 
             # Dispersion

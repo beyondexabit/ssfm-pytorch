@@ -8,7 +8,9 @@ device = torch.device("cpu")
 
 batch_size = 16
 n_symbs = 4096
+# Samples-per-symbol
 sps = 2
+# QAM modulation order
 M = 16
 power = 6 # dBm
 snr = 20 # dB
@@ -23,7 +25,8 @@ fp.attenuation = 0.2
 # Initialise SSFM channel
 ssfm_channel = ssfm.SSFM(fp, n_symbs * sps, device=device)
 
-# Generate symbols, upsample, pulse shape
+# Generate symbols, upsample, pulse shape.
+# Signal will always be of shape (batch_size, L, 2), where the last dimension is the polarisation
 symbs = utils.generate_qam(M, n_symbs, batch_size=batch_size, device=device)
 samples = utils.upsample_time(symbs, sps, dim=1)
 rrc = utils.time_domain_rrc(2, 0.1, 201, device=device)
